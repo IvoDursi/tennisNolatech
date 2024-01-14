@@ -17,6 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final TennisNolatechRepository tennisNolatechRepository;
 
+  /// Init del bloc
   Future<void> _onInit(
     HomeInitEvent event,
     Emitter<HomeState> emit,
@@ -37,6 +38,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeState.loaded(reservations));
   }
 
+  /// Elimina una reserva realizada
   Future<void> _onReservationRemove(
     HomeRemoveReservationEvent event,
     Emitter<HomeState> emit,
