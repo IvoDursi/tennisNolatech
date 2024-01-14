@@ -1,0 +1,28 @@
+name: tennis_nolatech_repository
+description: Nolatech Tennis Repository Package
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dartz: ^0.10.1
+  freezed_annotation: ^2.2.0
+  local_storage_service:
+    path: ../local_storage_service
+  weather_service:
+    path: ../weather_service
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0
+  very_good_analysis: ^5.1.0
+  build_runner: ^2.1.10
+  freezed: ^2.2.0
+  json_serializable: ^6.5.4
+  mockito: ^5.0.0
