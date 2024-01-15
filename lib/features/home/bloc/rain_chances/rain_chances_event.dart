@@ -5,6 +5,6 @@ part 'rain_chances_event.freezed.dart';
 
 @freezed
 class RainChancesEvent with _$RainChancesEvent {
-  const factory RainChancesEvent.init(Reservation reservation) =
+  const factory RainChancesEvent.init(List<Reservation> reservations) =
       RainChancesInitEvent;
 }

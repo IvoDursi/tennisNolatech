@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nolatech/app/utils/utils.dart';
 import 'package:nolatech/features/scheduling/bloc/bloc.dart';
 import 'package:nolatech/features/scheduling/scheduling.dart';
-import 'package:nolatech/app/utils/utils.dart';
 
 class DatePickerForm extends StatefulWidget {
   const DatePickerForm({super.key, required this.onDateSelect});
@@ -14,7 +14,7 @@ class DatePickerForm extends StatefulWidget {
 }
 
 class _DatePickerFormState extends State<DatePickerForm> {
-  final _dateController = TextEditingController();
+  final _dateController = TextEditingController(text: 'Seleccionar fecha');
 
   DateTime? selectedDate;
 
@@ -64,7 +64,7 @@ class _DatePickerFormState extends State<DatePickerForm> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  '0 %',
+                                  '- %',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Icon(
@@ -73,6 +73,18 @@ class _DatePickerFormState extends State<DatePickerForm> {
                                 ),
                               ],
                             ),
+                            loading: () {
+                              return const Center(
+                                child: SizedBox(
+                                  width: 25,
+                                  height: 25,
+                                  child: CircularProgressIndicator(
+                                    color: Color(0xff0a3740),
+                                    strokeWidth: 3,
+                                  ),
+                                ),
+                              );
+                            },
                             loaded: (rainChances) => Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -92,17 +104,26 @@ class _DatePickerFormState extends State<DatePickerForm> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
-            HourRange(
-              onSelect: (hour) {
-                selectedDate = selectedDate?.copyWith(hour: hour);
-                widget.onDateSelect(selectedDate);
-              },
+            BlocBuilder<ReservedHoursBloc, ReservedHoursState>(
+              builder: (context, state) => state.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
+                loaded: (reservedHours) {
+                  widget.onDateSelect(selectedDate?.copyWith(hour: 0));
+
+                  return HourRange(
+                    key: UniqueKey(),
+                    onSelect: (hour) {
+                      // selectedDate =
+                      widget.onDateSelect(selectedDate?.copyWith(hour: hour));
+                    },
+                    reservedHours: reservedHours,
+                  );
+                },
+              ),
             ),
           ],
         ),

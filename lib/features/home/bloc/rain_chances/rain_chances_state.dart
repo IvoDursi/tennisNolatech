@@ -7,7 +7,7 @@ part 'rain_chances_state.freezed.dart';
 class RainChancesState with _$RainChancesState {
   const factory RainChancesState.initial() = RainChancesInitialState;
   const factory RainChancesState.loading() = RainChancesLoadingState;
-  const factory RainChancesState.loaded(String reservationRainChances) =
+  const factory RainChancesState.loaded(List<String> reservationsRainChances) =
       RainChancesLoadedState;
   const factory RainChancesState.failed(TennisRepositoryFailures failure) =
       RainChancesFailedState;

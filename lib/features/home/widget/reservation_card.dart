@@ -1,50 +1,39 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nolatech/app/utils/utils.dart';
 import 'package:nolatech/extensions/extensions.dart';
 import 'package:nolatech/features/home/home.dart';
 import 'package:nolatech/map/map.dart';
-import 'package:nolatech/app/utils/utils.dart';
 import 'package:tennis_nolatech_repository/tennis_nolatech_repository.dart';
 
-class ReservationCard extends StatefulWidget {
+class ReservationCard extends StatelessWidget {
   const ReservationCard({
     super.key,
     required this.reservation,
+    this.rainChances,
   });
 
   final Reservation reservation;
-
-  @override
-  State<ReservationCard> createState() => _ReservationCardState();
-}
-
-class _ReservationCardState extends State<ReservationCard> {
-  @override
-  void initState() {
-    context
-        .read<RainChancesBloc>()
-        .add(RainChancesEvent.init(widget.reservation));
-    super.initState();
-  }
+  final String? rainChances;
 
   @override
   Widget build(BuildContext context) {
     return SlideInLeft(
       child: Container(
-        height: 320,
+        height: 350,
         margin: const EdgeInsets.only(top: 10, right: 10, left: 10),
-        decoration: const BoxDecoration(
-          color: Color(0xff0a3740),
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: const Color(0xff0a3740).withOpacity(0.7),
+          borderRadius: const BorderRadius.only(
             bottomRight: Radius.circular(30),
             topLeft: Radius.circular(30),
             bottomLeft: Radius.circular(5),
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black26,
-              offset: Offset(0, 3),
+              offset: Offset(0, 5),
               blurRadius: 4,
             )
           ],
@@ -76,9 +65,31 @@ class _ReservationCardState extends State<ReservationCard> {
                   topLeft: Radius.circular(30),
                 ),
                 child: Image.asset(
-                  widget.reservation.field.fieldFromString.image,
+                  reservation.field.fieldFromString.image,
                   height: 100,
                   fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                color: const Color(0xff0a3740).withOpacity(0.7),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+              ),
+              child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+                child: Text(
+                  reservation.field.fieldFromString.title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             ),
@@ -97,80 +108,79 @@ class _ReservationCardState extends State<ReservationCard> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Nombre: ${widget.reservation.name}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
+                            Row(
+                              children: [
+                                const Icon(Icons.person, color: Colors.white),
+                                const SizedBox(width: 4),
+                                _buildText(reservation.name),
+                              ],
                             ),
-                            Text(
-                              'Fecha: ${stringDateFormat(widget.reservation.date)}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.calendar_today_rounded,
+                                    color: Colors.white),
+                                const SizedBox(width: 4),
+                                _buildText(stringDateFormat(reservation.date)),
+                              ],
                             ),
-                            Text(
-                              'Horario: ${stringHourFormat(widget.reservation.date)}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                const Icon(Icons.watch_later_outlined,
+                                    color: Colors.white),
+                                const SizedBox(width: 4),
+                                _buildText(stringHourFormat(reservation.date)),
+                              ],
                             ),
                           ],
                         ),
                         const Spacer(),
-                        BlocBuilder<RainChancesBloc, RainChancesState>(
-                          builder: (context, state) => state.maybeWhen(
-                            orElse: () => const Text('-'),
-                            loaded: (chancesOfRain) => Text(
-                              'Lluvia $chancesOfRain%',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                        if (rainChances != null) ...{
+                          Row(
+                            children: [
+                              _buildText('Lluvia $rainChances%'),
+                              const Icon(
+                                Icons.water_drop_outlined,
                                 color: Colors.white,
                               ),
-                            ),
+                              const SizedBox(width: 20),
+                            ],
                           ),
-                        ),
-                        const Icon(
-                          Icons.water_drop_outlined,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
+                        } else ...{
+                          Row(
+                            children: [
+                              _buildText('Sin conexión '),
+                              const Icon(
+                                Icons.water_drop_outlined,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(width: 20),
+                            ],
+                          ),
+                        }
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Row(
                     children: [
                       SizedBox(
                         width: 150,
                         height: 35,
                         child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent),
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ReservationLocation(
-                                field: widget.reservation.field.fieldFromString,
+                                field: reservation.field.fieldFromString,
                               ),
                             ),
                           ),
-                          icon: const Icon(
-                            Icons.place,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            'Ver en mapa',
-                          ),
+                          icon: const Icon(Icons.place, size: 18),
+                          label: const Text('Ver en mapa'),
                         ),
                       ),
                       const Spacer(),
@@ -186,9 +196,7 @@ class _ReservationCardState extends State<ReservationCard> {
                                 size: 18,
                                 color: Colors.red[200],
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
+                              const SizedBox(width: 5),
                               const Text(
                                 'Eliminar reserva',
                                 style: TextStyle(color: Colors.white),
@@ -199,14 +207,23 @@ class _ReservationCardState extends State<ReservationCard> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 2,
-                  )
+                  const SizedBox(height: 2)
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Text _buildText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+        color: Colors.white,
       ),
     );
   }
@@ -221,14 +238,14 @@ class _ReservationCardState extends State<ReservationCard> {
             style: TextStyle(color: Colors.red),
           ),
           content: Text(
-            'Deseas eliminar la reseva en ${widget.reservation.name} a las ${widget.reservation.name} a nombre de ${widget.reservation.name}?',
+            'Deseas eliminar la reseva en la cancha ${reservation.field} el dia ${stringDateFormat(reservation.date)} a las ${reservation.date.hour} hs, a nombre de ${reservation.name}?',
           ),
           actions: [
             ElevatedButton(
               onPressed: () {
                 context
                     .read<HomeBloc>()
-                    .add(HomeEvent.removeReservation(widget.reservation));
+                    .add(HomeEvent.removeReservation(reservation));
                 Navigator.pop(context);
               },
               child: const Text('Confirmar'),

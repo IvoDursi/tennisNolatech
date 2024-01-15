@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nolatech/extensions/extensions.dart';
 import 'package:nolatech/features/home/home.dart';
@@ -108,7 +109,7 @@ class _SchedulingPageState extends State<SchedulingPage> {
                   ),
                   const IconInfo(
                     icon: Icons.monetization_on,
-                    content: '12 \$',
+                    content: '12',
                   ),
                 ],
               ),
@@ -122,12 +123,13 @@ class _SchedulingPageState extends State<SchedulingPage> {
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextFormField(
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(25),
+                          ],
                           controller: _textController,
                           decoration: const InputDecoration(
                             labelText: 'Nombre',
-                            prefixIcon: Icon(
-                              Icons.person,
-                            ),
+                            prefixIcon: Icon(Icons.person),
                           ),
                           validator: (text) {
                             if (text == null || text.isEmpty) {
@@ -137,9 +139,7 @@ class _SchedulingPageState extends State<SchedulingPage> {
                           },
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
                       DatePickerForm(
                         onDateSelect: (date) => selectedDate = date,
                       ),
@@ -154,6 +154,13 @@ class _SchedulingPageState extends State<SchedulingPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     if (selectedDate == null) {
+                      _showErrorSnackBar(
+                        context,
+                        'Debe seleccionar una fecha valida',
+                      );
+                      return;
+                    }
+                    if (selectedDate?.hour == 0) {
                       _showErrorSnackBar(
                         context,
                         'Debe seleccionar un horario valido',

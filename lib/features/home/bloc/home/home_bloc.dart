@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final TennisNolatechRepository tennisNolatechRepository;
 
-  /// Init del bloc
+  /// Evento init del bloc
   Future<void> _onInit(
     HomeInitEvent event,
     Emitter<HomeState> emit,

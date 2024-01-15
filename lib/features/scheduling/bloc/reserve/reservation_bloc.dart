@@ -15,6 +15,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
 
   final TennisNolatechRepository tennisNolatechRepository;
 
+  /// Registra una nueva reserva
   Future<void> _onRegister(
     ReservationRegisterEvent event,
     Emitter<ReservationState> emit,
@@ -33,6 +34,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     emit(const ReservationState.registered());
   }
 
+  /// Obtiene las probabilidades de lluvia de la fecha seleccionada
   Future<void> _onSetDate(
     ReservationSetDateEvent event,
     Emitter<ReservationState> emit,

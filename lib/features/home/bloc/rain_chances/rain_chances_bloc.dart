@@ -15,6 +15,7 @@ class RainChancesBloc extends Bloc<RainChancesEvent, RainChancesState> {
 
   final TennisNolatechRepository tennisNolatechRepository;
 
+  /// Evento init del bloc que toma las probabilidades de lluvia de las reservas realizadas
   Future<void> _onInit(
     RainChancesEvent event,
     Emitter<RainChancesState> emit,
@@ -22,16 +23,17 @@ class RainChancesBloc extends Bloc<RainChancesEvent, RainChancesState> {
     emit(const RainChancesState.loading());
 
     final registerEither = await tennisNolatechRepository
-        .fetchReservationChanceOfRain(event.reservation);
+        .fetchReservationsChanceOfRain(event.reservations);
 
     if (registerEither.isLeft()) {
       final failure =
-          (registerEither as Left<TennisRepositoryFailures, String>).value;
+          (registerEither as Left<TennisRepositoryFailures, List<String>>)
+              .value;
       return emit(RainChancesState.failed(failure));
     }
 
     final reservationsRainChances =
-        (registerEither as Right<TennisRepositoryFailures, String>).value;
+        (registerEither as Right<TennisRepositoryFailures, List<String>>).value;
 
     emit(RainChancesState.loaded(reservationsRainChances));
   }

@@ -16,6 +16,7 @@ class ReservedHoursBloc extends Bloc<ReservedHoursEvent, ReservedHoursState> {
   final TennisNolatechRepository tennisNolatechRepository;
   final Field field;
 
+  /// Obtiene las horas reservadas de una fecha y cancha especifica
   Future<void> _onInit(
     ReservedHoursInitEvent event,
     Emitter<ReservedHoursState> emit,

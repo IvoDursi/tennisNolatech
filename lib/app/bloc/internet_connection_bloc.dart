@@ -14,7 +14,7 @@ class InternetConnectionBloc
   /// Stream de conexión
   StreamSubscription<InternetConnectionStatus>? connectionStreamSubscription;
 
-  /// Inicializa el bloc para escuchar los cambios de conexión
+  /// Iinicializa el bloc para escuchar los cambios de conexión
   /// y emitir el estado de conexión actual
   Future<void> _onInit(
     InternetConnectionInitEvent event,

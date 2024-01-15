@@ -120,22 +120,28 @@ class TennisNolatechRepository {
   }
 
   /// Obtiene las probabilidades de lluvia de las reservas
-  Future<Either<TennisRepositoryFailures, String>> fetchReservationChanceOfRain(
-    Reservation reservation,
+  Future<Either<TennisRepositoryFailures, List<String>>>
+      fetchReservationsChanceOfRain(
+    List<Reservation> reservations,
   ) async {
-    final dateForecastEither =
-        await weatherService.fetchDateForecast(reservation.date);
+    List<String> reservationsChanceOfRain = [];
 
-    if (dateForecastEither.isLeft()) {
-      final failure =
-          (dateForecastEither as Left<WeatherServiceFailures, HourDTO>).value;
-      return Left(TennisRepositoryFailures.weatherService(failure));
+    for (var reservation in reservations) {
+      final dateForecastEither =
+          await weatherService.fetchDateForecast(reservation.date);
+
+      if (dateForecastEither.isLeft()) {
+        final failure =
+            (dateForecastEither as Left<WeatherServiceFailures, HourDTO>).value;
+        return Left(TennisRepositoryFailures.weatherService(failure));
+      }
+
+      final dateForecast =
+          (dateForecastEither as   Right<WeatherServiceFailures, HourDTO>).value;
+      reservationsChanceOfRain.add(dateForecast.chanceOfRain.toString());
     }
 
-    final dateForecast =
-        (dateForecastEither as Right<WeatherServiceFailures, HourDTO>).value;
-
-    return Right(dateForecast.chanceOfRain.toString());
+    return Right(reservationsChanceOfRain);
   }
 
   /// Obtiene las probabilidades de lluvia de una fecha especifica

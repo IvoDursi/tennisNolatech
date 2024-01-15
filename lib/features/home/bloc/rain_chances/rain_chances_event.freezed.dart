@@ -16,20 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RainChancesEvent {
-  Reservation get reservation => throw _privateConstructorUsedError;
+  List<Reservation> get reservations => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Reservation reservation) init,
+    required TResult Function(List<Reservation> reservations) init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Reservation reservation)? init,
+    TResult? Function(List<Reservation> reservations)? init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Reservation reservation)? init,
+    TResult Function(List<Reservation> reservations)? init,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -61,9 +61,7 @@ abstract class $RainChancesEventCopyWith<$Res> {
           RainChancesEvent value, $Res Function(RainChancesEvent) then) =
       _$RainChancesEventCopyWithImpl<$Res, RainChancesEvent>;
   @useResult
-  $Res call({Reservation reservation});
-
-  $ReservationCopyWith<$Res> get reservation;
+  $Res call({List<Reservation> reservations});
 }
 
 /// @nodoc
@@ -79,22 +77,14 @@ class _$RainChancesEventCopyWithImpl<$Res, $Val extends RainChancesEvent>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reservation = null,
+    Object? reservations = null,
   }) {
     return _then(_value.copyWith(
-      reservation: null == reservation
-          ? _value.reservation
-          : reservation // ignore: cast_nullable_to_non_nullable
-              as Reservation,
+      reservations: null == reservations
+          ? _value.reservations
+          : reservations // ignore: cast_nullable_to_non_nullable
+              as List<Reservation>,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ReservationCopyWith<$Res> get reservation {
-    return $ReservationCopyWith<$Res>(_value.reservation, (value) {
-      return _then(_value.copyWith(reservation: value) as $Val);
-    });
   }
 }
 
@@ -106,10 +96,7 @@ abstract class _$$RainChancesInitEventImplCopyWith<$Res>
       __$$RainChancesInitEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Reservation reservation});
-
-  @override
-  $ReservationCopyWith<$Res> get reservation;
+  $Res call({List<Reservation> reservations});
 }
 
 /// @nodoc
@@ -123,13 +110,13 @@ class __$$RainChancesInitEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reservation = null,
+    Object? reservations = null,
   }) {
     return _then(_$RainChancesInitEventImpl(
-      null == reservation
-          ? _value.reservation
-          : reservation // ignore: cast_nullable_to_non_nullable
-              as Reservation,
+      null == reservations
+          ? _value._reservations
+          : reservations // ignore: cast_nullable_to_non_nullable
+              as List<Reservation>,
     ));
   }
 }
@@ -137,14 +124,20 @@ class __$$RainChancesInitEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RainChancesInitEventImpl implements RainChancesInitEvent {
-  const _$RainChancesInitEventImpl(this.reservation);
+  const _$RainChancesInitEventImpl(final List<Reservation> reservations)
+      : _reservations = reservations;
 
+  final List<Reservation> _reservations;
   @override
-  final Reservation reservation;
+  List<Reservation> get reservations {
+    if (_reservations is EqualUnmodifiableListView) return _reservations;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_reservations);
+  }
 
   @override
   String toString() {
-    return 'RainChancesEvent.init(reservation: $reservation)';
+    return 'RainChancesEvent.init(reservations: $reservations)';
   }
 
   @override
@@ -152,12 +145,13 @@ class _$RainChancesInitEventImpl implements RainChancesInitEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RainChancesInitEventImpl &&
-            (identical(other.reservation, reservation) ||
-                other.reservation == reservation));
+            const DeepCollectionEquality()
+                .equals(other._reservations, _reservations));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, reservation);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_reservations));
 
   @JsonKey(ignore: true)
   @override
@@ -170,27 +164,27 @@ class _$RainChancesInitEventImpl implements RainChancesInitEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Reservation reservation) init,
+    required TResult Function(List<Reservation> reservations) init,
   }) {
-    return init(reservation);
+    return init(reservations);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Reservation reservation)? init,
+    TResult? Function(List<Reservation> reservations)? init,
   }) {
-    return init?.call(reservation);
+    return init?.call(reservations);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Reservation reservation)? init,
+    TResult Function(List<Reservation> reservations)? init,
     required TResult orElse(),
   }) {
     if (init != null) {
-      return init(reservation);
+      return init(reservations);
     }
     return orElse();
   }
@@ -225,11 +219,11 @@ class _$RainChancesInitEventImpl implements RainChancesInitEvent {
 }
 
 abstract class RainChancesInitEvent implements RainChancesEvent {
-  const factory RainChancesInitEvent(final Reservation reservation) =
+  const factory RainChancesInitEvent(final List<Reservation> reservations) =
       _$RainChancesInitEventImpl;
 
   @override
-  Reservation get reservation;
+  List<Reservation> get reservations;
   @override
   @JsonKey(ignore: true)
   _$$RainChancesInitEventImplCopyWith<_$RainChancesInitEventImpl>

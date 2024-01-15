@@ -20,7 +20,7 @@ mixin _$RainChancesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String reservationRainChances) loaded,
+    required TResult Function(List<String> reservationsRainChances) loaded,
     required TResult Function(TennisRepositoryFailures failure) failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$RainChancesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String reservationRainChances)? loaded,
+    TResult? Function(List<String> reservationsRainChances)? loaded,
     TResult? Function(TennisRepositoryFailures failure)? failed,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$RainChancesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String reservationRainChances)? loaded,
+    TResult Function(List<String> reservationsRainChances)? loaded,
     TResult Function(TennisRepositoryFailures failure)? failed,
     required TResult orElse(),
   }) =>
@@ -129,7 +129,7 @@ class _$RainChancesInitialStateImpl implements RainChancesInitialState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String reservationRainChances) loaded,
+    required TResult Function(List<String> reservationsRainChances) loaded,
     required TResult Function(TennisRepositoryFailures failure) failed,
   }) {
     return initial();
@@ -140,7 +140,7 @@ class _$RainChancesInitialStateImpl implements RainChancesInitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String reservationRainChances)? loaded,
+    TResult? Function(List<String> reservationsRainChances)? loaded,
     TResult? Function(TennisRepositoryFailures failure)? failed,
   }) {
     return initial?.call();
@@ -151,7 +151,7 @@ class _$RainChancesInitialStateImpl implements RainChancesInitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String reservationRainChances)? loaded,
+    TResult Function(List<String> reservationsRainChances)? loaded,
     TResult Function(TennisRepositoryFailures failure)? failed,
     required TResult orElse(),
   }) {
@@ -246,7 +246,7 @@ class _$RainChancesLoadingStateImpl implements RainChancesLoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String reservationRainChances) loaded,
+    required TResult Function(List<String> reservationsRainChances) loaded,
     required TResult Function(TennisRepositoryFailures failure) failed,
   }) {
     return loading();
@@ -257,7 +257,7 @@ class _$RainChancesLoadingStateImpl implements RainChancesLoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String reservationRainChances)? loaded,
+    TResult? Function(List<String> reservationsRainChances)? loaded,
     TResult? Function(TennisRepositoryFailures failure)? failed,
   }) {
     return loading?.call();
@@ -268,7 +268,7 @@ class _$RainChancesLoadingStateImpl implements RainChancesLoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String reservationRainChances)? loaded,
+    TResult Function(List<String> reservationsRainChances)? loaded,
     TResult Function(TennisRepositoryFailures failure)? failed,
     required TResult orElse(),
   }) {
@@ -327,7 +327,7 @@ abstract class _$$RainChancesLoadedStateImplCopyWith<$Res> {
           $Res Function(_$RainChancesLoadedStateImpl) then) =
       __$$RainChancesLoadedStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String reservationRainChances});
+  $Res call({List<String> reservationsRainChances});
 }
 
 /// @nodoc
@@ -342,13 +342,13 @@ class __$$RainChancesLoadedStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? reservationRainChances = null,
+    Object? reservationsRainChances = null,
   }) {
     return _then(_$RainChancesLoadedStateImpl(
-      null == reservationRainChances
-          ? _value.reservationRainChances
-          : reservationRainChances // ignore: cast_nullable_to_non_nullable
-              as String,
+      null == reservationsRainChances
+          ? _value._reservationsRainChances
+          : reservationsRainChances // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -356,14 +356,21 @@ class __$$RainChancesLoadedStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RainChancesLoadedStateImpl implements RainChancesLoadedState {
-  const _$RainChancesLoadedStateImpl(this.reservationRainChances);
+  const _$RainChancesLoadedStateImpl(final List<String> reservationsRainChances)
+      : _reservationsRainChances = reservationsRainChances;
 
+  final List<String> _reservationsRainChances;
   @override
-  final String reservationRainChances;
+  List<String> get reservationsRainChances {
+    if (_reservationsRainChances is EqualUnmodifiableListView)
+      return _reservationsRainChances;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_reservationsRainChances);
+  }
 
   @override
   String toString() {
-    return 'RainChancesState.loaded(reservationRainChances: $reservationRainChances)';
+    return 'RainChancesState.loaded(reservationsRainChances: $reservationsRainChances)';
   }
 
   @override
@@ -371,12 +378,13 @@ class _$RainChancesLoadedStateImpl implements RainChancesLoadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RainChancesLoadedStateImpl &&
-            (identical(other.reservationRainChances, reservationRainChances) ||
-                other.reservationRainChances == reservationRainChances));
+            const DeepCollectionEquality().equals(
+                other._reservationsRainChances, _reservationsRainChances));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, reservationRainChances);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_reservationsRainChances));
 
   @JsonKey(ignore: true)
   @override
@@ -390,10 +398,10 @@ class _$RainChancesLoadedStateImpl implements RainChancesLoadedState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String reservationRainChances) loaded,
+    required TResult Function(List<String> reservationsRainChances) loaded,
     required TResult Function(TennisRepositoryFailures failure) failed,
   }) {
-    return loaded(reservationRainChances);
+    return loaded(reservationsRainChances);
   }
 
   @override
@@ -401,10 +409,10 @@ class _$RainChancesLoadedStateImpl implements RainChancesLoadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String reservationRainChances)? loaded,
+    TResult? Function(List<String> reservationsRainChances)? loaded,
     TResult? Function(TennisRepositoryFailures failure)? failed,
   }) {
-    return loaded?.call(reservationRainChances);
+    return loaded?.call(reservationsRainChances);
   }
 
   @override
@@ -412,12 +420,12 @@ class _$RainChancesLoadedStateImpl implements RainChancesLoadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String reservationRainChances)? loaded,
+    TResult Function(List<String> reservationsRainChances)? loaded,
     TResult Function(TennisRepositoryFailures failure)? failed,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(reservationRainChances);
+      return loaded(reservationsRainChances);
     }
     return orElse();
   }
@@ -461,10 +469,11 @@ class _$RainChancesLoadedStateImpl implements RainChancesLoadedState {
 }
 
 abstract class RainChancesLoadedState implements RainChancesState {
-  const factory RainChancesLoadedState(final String reservationRainChances) =
+  const factory RainChancesLoadedState(
+          final List<String> reservationsRainChances) =
       _$RainChancesLoadedStateImpl;
 
-  String get reservationRainChances;
+  List<String> get reservationsRainChances;
   @JsonKey(ignore: true)
   _$$RainChancesLoadedStateImplCopyWith<_$RainChancesLoadedStateImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -549,7 +558,7 @@ class _$RainChancesFailedStateImpl implements RainChancesFailedState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String reservationRainChances) loaded,
+    required TResult Function(List<String> reservationsRainChances) loaded,
     required TResult Function(TennisRepositoryFailures failure) failed,
   }) {
     return failed(failure);
@@ -560,7 +569,7 @@ class _$RainChancesFailedStateImpl implements RainChancesFailedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String reservationRainChances)? loaded,
+    TResult? Function(List<String> reservationsRainChances)? loaded,
     TResult? Function(TennisRepositoryFailures failure)? failed,
   }) {
     return failed?.call(failure);
@@ -571,7 +580,7 @@ class _$RainChancesFailedStateImpl implements RainChancesFailedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String reservationRainChances)? loaded,
+    TResult Function(List<String> reservationsRainChances)? loaded,
     TResult Function(TennisRepositoryFailures failure)? failed,
     required TResult orElse(),
   }) {
