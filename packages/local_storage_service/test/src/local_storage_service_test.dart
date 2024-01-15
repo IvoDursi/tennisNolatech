@@ -65,9 +65,7 @@ void main() {
 
         expect(
           either,
-          const Left<void, String>(
-            null,
-          ),
+          const Right<void, String?>(null),
         );
       });
 
